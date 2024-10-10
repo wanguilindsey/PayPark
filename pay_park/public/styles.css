@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5; /* Light grey background */
+    color: #333; /* Dark grey text */
+    line-height: 1.6;
+}
+
+/* Global Color Palette */
+:root {
+    --primary-color: #000;  /* Black */
+    --secondary-color: #333; /* Dark Grey */
+    --accent-color: #f5f5f5; /* Light Grey */
+    --text-color: #fff;      /* White */
+  }
+  
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Set minimum height to 100% of the viewport */
+}
+
+  /* Header Styles */
+  .header {
+    background-color: var(--primary-color); /* Black background */
+    color: var(--text-color); /* White text */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .header-title {
+    font-size: 2rem; /* Large font size for the header */
+    font-weight: bold;
+  }
+  
+  /* Footer Styles */
+  .footer {
+    background-color: var(--secondary-color); /* Dark grey background */
+    color: var(--text-color); /* White text */
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+  }
+  
+  .footer-text {
+    font-size: 0.9rem; /* Slightly smaller font size for footer */
+  }
+  
+  .parking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between form elements */
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff; /* White background for the form */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Slightly rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px; /* Space between label and input */
+    font-weight: bold; /* Bold labels */
+  }
+  
+  select, input {
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Slightly rounded corners */
+  }
+  
+  button {
+    padding: 10px;
+    background-color: var(--primary-color); /* Black background */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: var(--secondary-color); /* Dark grey on hover */
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .header-title {
+      font-size: 1.5rem; /* Smaller header font on mobile */
+    }
+  
+    .footer-text {
+      font-size: 0.8rem; /* Smaller footer font on mobile */
+    }
+}
