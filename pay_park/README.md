@@ -1,0 +1,1 @@
+ParkPay is a simple and user-friendly web application designed to streamline parking payments in Nakuru County. The app allows users to select their sub-county, input their vehicle registration number, and pay for parking based on vehicle type. It aims to replace the current USSD-based system with a more efficient app that leverages mobile payments through M-Pesa.
