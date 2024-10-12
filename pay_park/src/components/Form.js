@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
     const [subCounty, setSubCounty] = useState('');
     const [vehicleType, setVehicleType] = useState('');
     const [vehicleReg, setVehicleReg] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const getParkingFee = (type) => {
         switch (type) {
@@ -23,25 +26,16 @@ const Form = () => {
         }
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
     
         // Calculate the parking fee based on vehicle type
         const parkingFee = getParkingFee(vehicleType);
-    
-        // Prompt the user for payment confirmation
-        const confirmPayment = window.confirm(
-          `Do you want to pay Kshs. ${parkingFee} to Nakuru County Account no. NESV-${vehicleReg}? Enter M-Pesa PIN.`
-        );
-    
-        if (confirmPayment) {
-          // Here you would proceed to integrate with the M-Pesa API
-          // This is where you would handle the M-Pesa payment logic
-          alert('Payment initiated.'); // Simulating payment initiation
-          // You might want to add additional logic here to handle the M-Pesa integration
-        } else {
-          alert('Payment cancelled.');
-        }
+
+        // Redirect to the payment confirmation page
+        navigate('/payment-confirmation', {
+          state: { phoneNumber, amount: parkingFee, vehicleReg }
+        });
       };
   
     return (
@@ -112,7 +106,9 @@ const Form = () => {
         />
       </div>
       
-      <button type="submit">Submit</button>
+      <button type="submit" disabled={loading}>
+      {loading ? 'Processing...' : 'Submit'}
+      </button>
       </form>
     );
   };
