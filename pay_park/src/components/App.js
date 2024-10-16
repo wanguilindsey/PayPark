@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import Form from './Form';
-import PaymentConfirmation from './PaymentConfirmation';
 
 const App = () => {
   return (
@@ -14,7 +13,6 @@ const App = () => {
         <div className="container">
         <Routes>
           <Route path="/" element={<Form />} />
-          <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
         </Routes>
         </div>
 

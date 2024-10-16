@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Form = () => {
     const [subCounty, setSubCounty] = useState('');
@@ -7,7 +7,6 @@ const Form = () => {
     const [vehicleReg, setVehicleReg] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
 
     const getParkingFee = (type) => {
         switch (type) {
@@ -28,15 +27,27 @@ const Form = () => {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
     
         // Calculate the parking fee based on vehicle type
         const parkingFee = getParkingFee(vehicleType);
 
-        // Redirect to the payment confirmation page
-        navigate('/payment-confirmation', {
-          state: { phoneNumber, amount: parkingFee, vehicleReg }
+        try {
+          // Send data to backend for initiating STK Push
+          const response = await axios.post('http://localhost:5000/api/initiate-payment', {
+            phoneNumber,
+            amount: parkingFee,
+            vehicleReg,
         });
-      };
+
+        alert('Check your phone for the M-Pesa PIN prompt to complete the transaction.');
+        setLoading(false);
+      } catch (error) {
+        console.error('Payment initiation error:', error);
+        alert('Payment initiation failed. Please try again.');
+        setLoading(false);
+      }
+    };
   
     return (
       <form className="parking-form" onSubmit={handleSubmit}>
