@@ -34,7 +34,7 @@ const Form = () => {
 
         try {
           // Send data to backend for initiating STK Push
-          const response = await axios.post('http://localhost:5000/api/initiate-payment', {
+          await axios.post('http://localhost:5000/api/initiate-payment', {
             phoneNumber,
             amount: parkingFee,
             vehicleReg,
