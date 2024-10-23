@@ -1,8 +1,69 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const router = express.Router();
 require('dotenv').config();
 
 const nakuruPayBill = '174379';
+
+const User = require('./User');
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useNewUrlParser: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+router.post('/signup', async (req, res) => {
+    const { name, email, password } = req.body;
+
+    try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
+        // Hash the password before saving
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ name, email, password: hashedPassword });
+        await newUser.save();
+
+        res.status(201).json({ message: 'User created successfully' });
+    } catch (error) {
+        console.error('Signup error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+// Login route
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: 'User not found' });
+        }
+
+        // Compare passwords
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ error: 'Invalid credentials' });
+        }
+
+        res.status(200).json({ message: 'Login successful' });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 // Payment route with mock response
 router.post('/initiate-payment', async (req, res) => {
